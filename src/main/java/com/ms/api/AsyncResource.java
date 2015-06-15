@@ -45,7 +45,6 @@ public class AsyncResource {
     @Path("/userInfo/{user}")
     @Produces(MediaType.APPLICATION_JSON)
     public void userInfoAsync(@Suspended AsyncResponse asyncResponse, @PathParam("user") String user) {
-        System.out.println("IN userInfoAsync!!");
         CompletableFuture<GitHubUser> gitHubFuture = Futures.toCompletable(gitHubService.userAsync(user), executor);
         CompletableFuture<FacebookUser> facebookFuture = Futures.toCompletable(facebookService.userAsync(user), executor);
 

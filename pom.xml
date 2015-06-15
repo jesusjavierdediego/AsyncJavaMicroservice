@@ -11,22 +11,27 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.plugin.shade.version>2.4</maven.plugin.shade.version>
-        <maven.plugin.docker.version>0.11.4</maven.plugin.docker.version>
+        <maven.plugin.docker.version>0.12.0</maven.plugin.docker.version>
         <maven.plugin.build-helper.version>1.9.1</maven.plugin.build-helper.version>
         <project.mainClass>com.ms.app.FraudDetectionServer</project.mainClass>
         
         <grizzly2-http.version>2.18</grizzly2-http.version>
         <jackson.version>2.5.4</jackson.version>
         <slf4j.version>1.7.0</slf4j.version>
-        <guice.version>3.0</guice.version>
-        <jersey.version>1.19</jersey.version>
         
-        <docker.baseImage>bureauservice:jdk8</docker.baseImage>
-        <docker.deploy.dir>/opt/apps/trustev</docker.deploy.dir>
+        <grizzly2-http.test.version>2.18</grizzly2-http.test.version>
+                
         <docker.assembly.dir>/src/main/resources</docker.assembly.dir>
+        <docker.baseImage>bureauservice:jdk8</docker.baseImage>
+        <docker.deploy.dir>/opt/apps/asyncservice</docker.deploy.dir>
+        <docker.assembly.dir>src/main/resources</docker.assembly.dir>
         <docker.port.internal>9300</docker.port.internal>
         <docker.port.external>9300</docker.port.external>
         <docker.volume.log>/usr/bureau/services/trustev/log</docker.volume.log>
+        <docker.volume.config>/usr/bureau/services/trustev/config</docker.volume.config>
+        <docker.registry>192.168.59.103:5000</docker.registry>
+        <docker.host>tcp://192.168.59.103:2375</docker.host>
+        <docker.cert.dir>C://Users/jdediego/.boot2docker/certs/boot2docker-vm</docker.cert.dir>
     </properties>
     <dependencies>
         <dependency>
@@ -58,6 +63,13 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
             <version>${slf4j.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.glassfish.jersey.test-framework.providers</groupId>
+            <artifactId>jersey-test-framework-provider-grizzly2</artifactId>
+            <version>${grizzly2-http.test.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     
@@ -112,28 +124,48 @@
                     <plugin>
                         <groupId>org.jolokia</groupId>
                         <artifactId>docker-maven-plugin</artifactId>
-                        <version>${maven.plugin.docker.version}</version>
+                        <version>${maven.plugin.docker.version}</version>      
                         <configuration>
+                            <dockerHost>${docker.host}</dockerHost>
+                            <certPath>${docker.cert.dir}</certPath>
+                            <sourceDirectory>${docker.assembly.dir}</sourceDirectory>
                             <images>
                                 <image>
                                     <alias>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}</alias>
                                     <name>${project.name}</name>
-                                    <build>
-                                        <from>${docker.image}</from>
+                                     <build>
+                                        <from>${docker.baseImage}</from>
+                                        <maintainer>jdediego@fexco.com</maintainer>
+                                        <tags>
+                                            <tag>${project.version}</tag>
+                                        </tags>
                                         <assembly>
                                             <descriptor>assembly.xml</descriptor>
-                                            <dockerFileDir>${docker.assembly.dir}</dockerFileDir>
                                             <basedir>/</basedir>
                                         </assembly>
                                         <ports>
-                                            <port>${docker.port.external}</port>
+                                            <port>${docker.external.port}</port>
                                         </ports>
-                                        <command>java -jar ${docker.deploy.dir}/${project.artifactId}-.${project.version}.${project.packaging}</command>
-                                    </build>
+                                        <volumes>
+                                            <volume>${docker.volume.log}</volume>
+                                            <volume>${docker.volume.config}</volume>
+                                        </volumes>
+                                        <entryPoint>
+                                            <exec>
+                                              <arg>java</arg>
+                                              <arg>-jar</arg>
+                                              <arg>${docker.deploy.dir}/${project.artifactId}-${project.version}.${project.packaging}</arg>
+                                            </exec>
+                                        </entryPoint>
+                                     </build>
                                     <run>
                                         <ports>
                                             <port>${docker.port.external}:${docker.port.internal}</port>
                                         </ports>
+                                        <env>
+                                            <SERVICE_DIR_LOG>${docker.volume.log}</SERVICE_DIR_LOG>
+                                            <SERVICE_DIR_CONFIG>${docker.volume.config}</SERVICE_DIR_CONFIG>
+                                         </env>
                                     </run>
                                 </image>
                             </images>

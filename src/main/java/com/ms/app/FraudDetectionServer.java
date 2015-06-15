@@ -24,10 +24,6 @@ public final class FraudDetectionServer extends AbstractIdleService{
 
     
     public FraudDetectionServer() throws Exception {
-//        FraudDetectionApplication app = new FraudDetectionApplication();
-//        Set<Class<?>> resources = new LinkedHashSet<>(app.getClasses());
-//        resources.add(JacksonJsonProvider.class);
-//        ResourceConfig config = new ResourceConfig(resources);
         URI endpoint = new URI(BASE_URI + ":" + DEFAULT_PORT);
         httpServer = GrizzlyHttpServerFactory.createHttpServer(endpoint, getResourceConfig());
     }
