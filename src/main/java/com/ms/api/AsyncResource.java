@@ -28,6 +28,7 @@ import java.util.stream.Stream;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
+import org.glassfish.jersey.server.ManagedAsync;
 
 @Path("/ms")
 public class AsyncResource {
@@ -43,7 +44,7 @@ public class AsyncResource {
 
     @GET
     @Path("/userInfo/{user}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON) 
     public void userInfoAsync(@Suspended AsyncResponse asyncResponse, @PathParam("user") String user) {
         CompletableFuture<GitHubUser> gitHubFuture = Futures.toCompletable(gitHubService.userAsync(user), executor);
         CompletableFuture<FacebookUser> facebookFuture = Futures.toCompletable(facebookService.userAsync(user), executor);

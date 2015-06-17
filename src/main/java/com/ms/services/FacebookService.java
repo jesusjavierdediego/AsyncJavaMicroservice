@@ -13,7 +13,9 @@ public class FacebookService {
 
     private final WebTarget target = ClientBuilder.newClient()
             .target("http://graph.facebook.com/");
-
+    /*
+    https://jersey.java.net/documentation/latest/rx-client.html
+    */
     public Future<FacebookUser> userAsync(String user) {
         return target
                 .path("/{user}")
@@ -23,12 +25,13 @@ public class FacebookService {
                 .get(new InvocationCallback<FacebookUser>() {
                     @Override
                     public void completed(FacebookUser facebookUser) {
-
+                          //Callback: Do subsequent action when completed 
+                        //Nest any other actions
                     }
 
                     @Override
                     public void failed(Throwable throwable) {
-
+                           //throw exception and log event
                     }
                 });
     }

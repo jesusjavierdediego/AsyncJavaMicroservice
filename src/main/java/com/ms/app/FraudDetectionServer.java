@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import com.ms.utils.TaskExecutor;
 import com.ms.services.*;
 
+
 public final class FraudDetectionServer extends AbstractIdleService{
 
     private static final int DEFAULT_PORT = 9300;
@@ -59,6 +60,7 @@ public final class FraudDetectionServer extends AbstractIdleService{
                 bind(FacebookService.class).to(FacebookService.class);
                 bind(GitHubService.class).to(GitHubService.class);
                 bind(TaskExecutor.class).to(TaskExecutor.class);
+                bind(FacebookRxService.class).to(FacebookRxService.class);
             }
         });
         return resourceConfig;

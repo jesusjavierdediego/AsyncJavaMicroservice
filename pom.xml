@@ -40,6 +40,16 @@
             <version>${grizzly2-http.version}</version>
         </dependency>
         <dependency>
+            <groupId>org.glassfish.jersey.ext.rx</groupId>
+            <artifactId>jersey-rx-client</artifactId>
+            <version>${grizzly2-http.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jersey.ext.rx</groupId>
+            <artifactId>jersey-rx-client-rxjava</artifactId>
+            <version>${grizzly2-http.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
             <version>${jackson.version}</version>
@@ -133,7 +143,7 @@
                                 <image>
                                     <alias>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}</alias>
                                     <name>${project.name}</name>
-                                     <build>
+                                    <build>
                                         <from>${docker.baseImage}</from>
                                         <maintainer>jdediego@fexco.com</maintainer>
                                         <tags>
@@ -152,12 +162,12 @@
                                         </volumes>
                                         <entryPoint>
                                             <exec>
-                                              <arg>java</arg>
-                                              <arg>-jar</arg>
-                                              <arg>${docker.deploy.dir}/${project.artifactId}-${project.version}.${project.packaging}</arg>
+                                                <arg>java</arg>
+                                                <arg>-jar</arg>
+                                                <arg>${docker.deploy.dir}/${project.artifactId}-${project.version}.${project.packaging}</arg>
                                             </exec>
                                         </entryPoint>
-                                     </build>
+                                    </build>
                                     <run>
                                         <ports>
                                             <port>${docker.port.external}:${docker.port.internal}</port>
@@ -165,7 +175,7 @@
                                         <env>
                                             <SERVICE_DIR_LOG>${docker.volume.log}</SERVICE_DIR_LOG>
                                             <SERVICE_DIR_CONFIG>${docker.volume.config}</SERVICE_DIR_CONFIG>
-                                         </env>
+                                        </env>
                                     </run>
                                 </image>
                             </images>
@@ -194,7 +204,7 @@
                             </execution>
                         </executions>
                     </plugin>
-<!--                    parsedVersion.majorVersion
+                    <!--                    parsedVersion.majorVersion
                     parsedVersion.minorVersion
                     parsedVersion.incrementalVersion
                     parsedVersion.qualifier
@@ -204,12 +214,12 @@
                         <artifactId>build-helper-maven-plugin</artifactId>
                         <version>${maven.plugin.build-helper.version}</version>
                         <executions>
-                          <execution>
-                            <id>parse-version</id>
-                            <goals>
-                              <goal>parse-version</goal>
-                            </goals>
-                          </execution>
+                            <execution>
+                                <id>parse-version</id>
+                                <goals>
+                                    <goal>parse-version</goal>
+                                </goals>
+                            </execution>
                         </executions>
                     </plugin>
                 </plugins>
