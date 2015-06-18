@@ -62,7 +62,7 @@ public final class FraudDetectionServer extends AbstractIdleService{
                 bind(FacebookService.class).to(FacebookService.class);
                 bind(GitHubService.class).to(GitHubService.class);
                 bind(TaskExecutor.class).to(TaskExecutor.class);
-                bind(FacebookRxService.class).to(FacebookRxService.class);
+                //bind(FacebookRxService.class).to(FacebookRxService.class);
             }
         });
         return resourceConfig;

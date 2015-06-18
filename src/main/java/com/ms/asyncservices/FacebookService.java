@@ -7,6 +7,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.InvocationCallback;
 import javax.ws.rs.client.WebTarget;
 import java.util.concurrent.Future;
+import org.glassfish.jersey.client.rx.*;
 
 @Service
 public class FacebookService {

@@ -45,7 +45,9 @@ public class AsyncResource {
     @GET
     @Path("/userInfo/{user}")
     @Produces(MediaType.APPLICATION_JSON) 
-    public void userInfoAsync(@Suspended AsyncResponse asyncResponse, @PathParam("user") String user) {
+    @ManagedAsync
+    public void userInfoAsync(@Suspended final AsyncResponse asyncResponse, @PathParam("user") String user) {
+        final long time = System.nanoTime();
         CompletableFuture<GitHubUser> gitHubFuture = Futures.toCompletable(gitHubService.userAsync(user), executor);
         CompletableFuture<FacebookUser> facebookFuture = Futures.toCompletable(facebookService.userAsync(user), executor);
 
@@ -65,7 +67,9 @@ public class AsyncResource {
     @GET
     @Path("/contributors/{user}")
     @Produces(MediaType.APPLICATION_JSON)
-    public void contributorsAsync(@Suspended AsyncResponse asyncResponse, @PathParam("user") String user) {
+    @ManagedAsync
+    public void contributorsAsync(@Suspended final AsyncResponse asyncResponse, @PathParam("user") String user) {
+        final long time = System.nanoTime();
         Futures.toCompletable(gitHubService.reposAsync(user), executor)
                 .thenCompose(
                         repos -> getContributors(user, repos))
