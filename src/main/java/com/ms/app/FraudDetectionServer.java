@@ -1,6 +1,9 @@
 package com.ms.app;
 
 
+import com.ms.rxservices.FacebookRxService;
+import com.ms.asyncservices.GitHubService;
+import com.ms.asyncservices.FacebookService;
 import com.google.common.util.concurrent.AbstractIdleService;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
@@ -13,7 +16,6 @@ import java.net.URI;
 import java.util.concurrent.TimeUnit;
 
 import com.ms.utils.TaskExecutor;
-import com.ms.services.*;
 
 
 public final class FraudDetectionServer extends AbstractIdleService{

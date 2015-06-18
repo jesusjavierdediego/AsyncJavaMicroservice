@@ -1,10 +1,10 @@
 package com.ms.api;
 
 
-import com.ms.services.FacebookService;
+import com.ms.asyncservices.FacebookService;
 import com.ms.domain.GitHubRepo;
 import com.ms.utils.Futures;
-import com.ms.services.GitHubService;
+import com.ms.asyncservices.GitHubService;
 import com.ms.utils.TaskExecutor;
 import com.ms.domain.FacebookUser;
 import com.ms.domain.GitHubContributor;

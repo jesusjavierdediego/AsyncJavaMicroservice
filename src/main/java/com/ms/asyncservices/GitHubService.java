@@ -1,4 +1,4 @@
-package com.ms.services;
+package com.ms.asyncservices;
 
 import org.jvnet.hk2.annotations.Service;
 import com.ms.domain.GitHubContributor;

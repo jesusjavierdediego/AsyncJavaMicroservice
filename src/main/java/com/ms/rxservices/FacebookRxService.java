@@ -1,4 +1,4 @@
-package com.ms.services;
+package com.ms.rxservices;
 
 
 import com.ms.domain.FacebookUser;

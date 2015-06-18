@@ -9,7 +9,7 @@ import javax.ws.rs.container.Suspended;
 import org.glassfish.jersey.server.Uri;
 import rx.Observable;
 import com.ms.domain.FacebookUser;
-import com.ms.services.FacebookRxService;
+import com.ms.rxservices.FacebookRxService;
 import javax.inject.Inject;
 import org.glassfish.jersey.server.ManagedAsync;
 
