@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.ms</groupId>
-    <artifactId>AsyncRxJavaMicroservice</artifactId>
+    <artifactId>asyncrxjavamicroservice</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>AsyncRxJavaMicroservice_Prototype1</name>
@@ -20,18 +20,6 @@
         <slf4j.version>1.7.0</slf4j.version>
         
         <grizzly2-http.test.version>2.18</grizzly2-http.test.version>
-                
-        <docker.assembly.dir>/src/main/resources</docker.assembly.dir>
-        <docker.baseImage>bureauservice:jdk8</docker.baseImage>
-        <docker.deploy.dir>/opt/apps/asyncservice</docker.deploy.dir>
-        <docker.assembly.dir>src/main/resources</docker.assembly.dir>
-        <docker.port.internal>9300</docker.port.internal>
-        <docker.port.external>9300</docker.port.external>
-        <docker.volume.log>/usr/bureau/services/trustev/log</docker.volume.log>
-        <docker.volume.config>/usr/bureau/services/trustev/config</docker.volume.config>
-        <docker.registry>192.168.59.103:5000</docker.registry>
-        <docker.host>tcp://192.168.59.103:2375</docker.host>
-        <docker.cert.dir>C://Users/jdediego/.boot2docker/certs/boot2docker-vm</docker.cert.dir>
     </properties>
     <dependencies>
         <dependency>
@@ -136,6 +124,19 @@
     <profiles>
         <profile>
             <id>docker</id>
+            <properties>
+                <docker.assembly.dir>/src/main/resources</docker.assembly.dir>
+                <docker.baseImage>bureauservice:8.0</docker.baseImage>
+                <docker.deploy.dir>/opt/apps/asyncservice</docker.deploy.dir>
+                <docker.assembly.dir>src/main/resources</docker.assembly.dir>
+                <docker.port.internal>9300</docker.port.internal>
+                <docker.port.external>9300</docker.port.external>
+                <docker.volume.log>/usr/bureau/services/trustev/log</docker.volume.log>
+                <docker.volume.config>/usr/bureau/services/trustev/config</docker.volume.config>
+                <docker.registry>192.168.59.103:5000</docker.registry>
+                <docker.host>tcp://192.168.59.103:2375</docker.host>
+                <docker.cert.dir>C://Users/jdediego/.boot2docker/certs/boot2docker-vm</docker.cert.dir>
+            </properties>
             <build>
                 <plugins>
                     <plugin>
@@ -149,7 +150,7 @@
                             <images>
                                 <image>
                                     <alias>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}</alias>
-                                    <name>${project.name}</name>
+                                    <name>${project.artifactId}</name>
                                     <build>
                                         <from>${docker.baseImage}</from>
                                         <maintainer>jdediego@fexco.com</maintainer>
@@ -161,7 +162,7 @@
                                             <basedir>/</basedir>
                                         </assembly>
                                         <ports>
-                                            <port>${docker.external.port}</port>
+                                            <port>${docker.port.internal}</port>
                                         </ports>
                                         <volumes>
                                             <volume>${docker.volume.log}</volume>

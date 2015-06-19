@@ -7,8 +7,8 @@
             <includes>
                 <include>${project.groupId}:${project.artifactId}</include>
             </includes>
-            <outputDirectory>${outputPath}</outputDirectory>
-            <outputFileNameMapping>${project.artifactId}-.${project.version}.${project.packaging}</outputFileNameMapping>
+            <outputDirectory>${docker.deploy.dir}</outputDirectory>
+            <outputFileNameMapping>${project.artifactId}-${project.version}.${project.packaging}</outputFileNameMapping>
         </dependencySet>
     </dependencySets>
 </assembly>
