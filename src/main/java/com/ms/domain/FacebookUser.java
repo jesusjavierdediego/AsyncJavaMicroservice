@@ -9,7 +9,6 @@ public class FacebookUser {
     private final String name;
     private final String username;
     private final String locale;
-    private Long  processingTime;
 
     @JsonCreator
     public FacebookUser(@JsonProperty("name") String name,

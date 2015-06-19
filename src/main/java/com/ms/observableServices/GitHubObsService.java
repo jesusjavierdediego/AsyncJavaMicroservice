@@ -26,10 +26,9 @@ import rx.Observable;
 public class GitHubObsService {
 
     
-    private Client client = ClientBuilder.newClient();
-    WebTarget target = client.target("http://graph.facebook.com/");
+    private final WebTarget target = ClientBuilder.newClient().target("http://graph.facebook.com/");
     
-    RxWebTarget<RxObservableInvoker> rxTarget = Rx.from(target, RxObservableInvoker.class);
+    private final  RxWebTarget<RxObservableInvoker> rxTarget = Rx.from(target, RxObservableInvoker.class);
 
 
     public Observable<GitHubUser> userObs(String user) {

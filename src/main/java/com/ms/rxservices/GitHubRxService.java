@@ -11,15 +11,12 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 import jersey.repackaged.jsr166e.CompletableFuture;
-import org.glassfish.jersey.client.rx.RxClient;
 import org.glassfish.jersey.client.rx.jsr166e.RxCompletableFuture;
-import org.glassfish.jersey.client.rx.jsr166e.RxCompletableFutureInvoker;
 
 @Service
 public class GitHubRxService {
 
-    RxClient<RxCompletableFutureInvoker> newRxClient = RxCompletableFuture.newClient();
-    private final WebTarget target = newRxClient.target("https://api.github.com/");
+    private final WebTarget target = RxCompletableFuture.newClient().target("https://api.github.com/");
 
 
     public CompletableFuture<GitHubUser> userRx(String user) {

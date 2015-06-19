@@ -1,6 +1,7 @@
 
 package com.ms.api;
 
+import com.ms.domain.CombinedEntity;
 import com.ms.observableServices.FacebookObsService;
 import com.ms.observableServices.GitHubObsService;
 import com.ms.domain.FacebookUser;
@@ -20,13 +21,14 @@ import javax.ws.rs.core.Response;
 import org.glassfish.jersey.server.ManagedAsync;
 import rx.Observable;
 import rx.Subscriber;
+import rx.schedulers.Schedulers;
 
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 
 @Path("/msobs")
 @Produces("application/json")
-public class ObsService {
+public class ObsResource {
     
     @Inject
     private FacebookObsService facebookObsService;
@@ -36,7 +38,7 @@ public class ObsService {
     
     
     @GET
-    @Path("/userInfo/{user}")
+    @Path("/combined/{user}")
     @Produces(MediaType.APPLICATION_JSON) 
     @ManagedAsync
     public void bookAndComment(@Suspended final AsyncResponse asyncResponse, @PathParam("user") String user) {
@@ -44,25 +46,25 @@ public class ObsService {
         
         Observable<FacebookUser> facebookUserObs = facebookObsService.userObs(user);
         Observable<GitHubUser> gitHubUserObs = gitHubObsService.userObs(user);
-
-         Observable.zip(facebookUserObs, gitHubUserObs, (f, g) -> 
-                            new UserInfo(f, g)
-                  ).subscribe(new Subscriber<UserInfo>() {
-                            @Override
-                            public void onCompleted() {
-                            }
-
-                            @Override
-                            public void onError(Throwable e) {
-                                //asyncResponse.resume(e);
-                                asyncResponse.resume(Response.status(INTERNAL_SERVER_ERROR).entity(e).build());
-                            }
-
-                            @Override
-                            public void onNext(UserInfo userInfo) {
-                                asyncResponse.resume(userInfo);
-                            }
-                        });
+        
+        Observable.just(new CombinedEntity())
+                .zipWith(facebookUserObs, (response, fUser) -> {
+                    response.setFacebookUser(fUser);
+                    return response;
+                })
+                .zipWith(gitHubUserObs, (response, gUser) -> {
+                    response.setGitHubUser(gUser);
+                    return response;
+                })
+                .observeOn(Schedulers.io())
+                .subscribe(response -> {
+                    // Do something with errors.
+                    
+                    response.setProcessingTime((System.nanoTime() - time) / 1000000);
+                    asyncResponse.resume(response);
+                }, asyncResponse::resume);
+        
+            
          
         asyncResponse.setTimeout(1000, TimeUnit.MILLISECONDS);
         asyncResponse.setTimeoutHandler(

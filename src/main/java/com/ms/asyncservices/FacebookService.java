@@ -7,16 +7,12 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.InvocationCallback;
 import javax.ws.rs.client.WebTarget;
 import java.util.concurrent.Future;
-import org.glassfish.jersey.client.rx.*;
 
 @Service
 public class FacebookService {
 
-    private final WebTarget target = ClientBuilder.newClient()
-            .target("http://graph.facebook.com/");
-    /*
-    https://jersey.java.net/documentation/latest/rx-client.html
-    */
+    private final WebTarget target = ClientBuilder.newClient().target("http://graph.facebook.com/");
+    
     public Future<FacebookUser> userAsync(String user) {
         return target
                 .path("/{user}")

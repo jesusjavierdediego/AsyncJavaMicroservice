@@ -11,10 +11,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import java.io.*;
 
+
 @Path("/web")
 public class StaticResource {
 
     private static final String ROOT_STATIC_RESOURCES = "static";
+    
 
     @GET
     @Path("{path : .*}")

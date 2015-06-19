@@ -18,17 +18,12 @@ import org.glassfish.jersey.client.rx.rxjava.RxObservableInvoker;
 @Service
 public class FacebookObsService {
 
-    private Client client = ClientBuilder.newClient();
-    WebTarget target = client.target("http://graph.facebook.com/");
+    private final WebTarget target = ClientBuilder.newClient().target("http://graph.facebook.com/");
     
-    RxWebTarget<RxObservableInvoker> rxTarget = Rx.from(target, RxObservableInvoker.class);
+    private final RxWebTarget<RxObservableInvoker> rxTarget = Rx.from(target, RxObservableInvoker.class);
     
-    
-    /*
-    https://jersey.java.net/documentation/latest/rx-client.html
-    */
+
     public Observable<FacebookUser> userObs(String user) {
-        //return rxTarget
         return RxObservable.from(rxTarget)
                 .path("/{user}")
                 .resolveTemplate("user", user)
@@ -36,7 +31,6 @@ public class FacebookObsService {
                 .rx()
                 .get(FacebookUser.class)
                 .onErrorReturn(throwable -> {
-                    //errors.offer("Recommended: " + throwable.getMessage());
                     System.out.println(throwable.getMessage());
                     return new FacebookUser("", "", "");
                 });
