@@ -8,7 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @ApplicationPath("/")
-public class FraudDetectionApplication extends Application {
+public class MSApplication extends Application {
 
     @Override
     public Set<Class<?>> getClasses() {

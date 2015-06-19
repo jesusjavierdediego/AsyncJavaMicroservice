@@ -30,7 +30,8 @@ import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 import org.glassfish.jersey.server.ManagedAsync;
 
-@Path("/ms")
+@Path("/msa")
+@Produces("application/json")
 public class AsyncResource {
 
     @Inject

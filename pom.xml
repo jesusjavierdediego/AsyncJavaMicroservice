@@ -13,7 +13,7 @@
         <maven.plugin.shade.version>2.4</maven.plugin.shade.version>
         <maven.plugin.docker.version>0.12.0</maven.plugin.docker.version>
         <maven.plugin.build-helper.version>1.9.1</maven.plugin.build-helper.version>
-        <project.mainClass>com.ms.app.FraudDetectionServer</project.mainClass>
+        <project.mainClass>com.ms.app.MSServer</project.mainClass>
         
         <grizzly2-http.version>2.18</grizzly2-http.version>
         <jackson.version>2.5.4</jackson.version>
@@ -44,11 +44,11 @@
             <artifactId>jersey-rx-client</artifactId>
             <version>${grizzly2-http.version}</version>
         </dependency>
-<!--        <dependency>
+        <dependency>
             <groupId>org.glassfish.jersey.ext.rx</groupId>
             <artifactId>jersey-rx-client-rxjava</artifactId>
             <version>${grizzly2-http.version}</version>
-        </dependency>-->
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.jaxrs</groupId>
             <artifactId>jackson-jaxrs-json-provider</artifactId>
@@ -87,6 +87,7 @@
             <version>${grizzly2-http.test.version}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
     
     <build>

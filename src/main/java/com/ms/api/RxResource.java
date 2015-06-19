@@ -22,7 +22,7 @@ import javax.ws.rs.core.MediaType;
 import org.glassfish.jersey.server.ManagedAsync;
 
 
-@Path("/msa")
+@Path("/msrx")
 @Produces("application/json")
 public class RxResource {
 
