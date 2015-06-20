@@ -1,29 +1,28 @@
 package com.ms.api;
 
 
+import com.ms.app.MSApplication;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
-import org.glassfish.jersey.server.Uri;
 
-import com.ms.domain.FacebookUser;
 import com.ms.domain.GitHubContributor;
 import com.ms.domain.GitHubRepo;
 import com.ms.domain.GitHubUser;
+import com.ms.domain.JSONPlaceholderItem;
 import com.ms.domain.UserInfo;
-import com.ms.rxservices.FacebookRxService;
 import com.ms.rxservices.GitHubRxService;
+import com.ms.rxservices.JSONPlaceholderRxService;
 import com.ms.utils.Futures;
 import com.ms.utils.TaskExecutor;
+import com.ms.utils.Utils;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-//import jersey.repackaged.jsr166e.CompletableFuture;
 import javax.inject.Inject;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
@@ -37,14 +36,9 @@ import org.glassfish.jersey.server.ManagedAsync;
 @Produces("application/json")
 public class RxResource {
 
-    @Uri("/userInfo/{user}")
-    private WebTarget user;
-    
-    @Uri("/contributors/{user}")
-    private WebTarget contributor;
     
     @Inject
-    private FacebookRxService facebookRxService;
+    private JSONPlaceholderRxService jSONPlaceholderRxService;
     
     @Inject
     private GitHubRxService gitHubRxService;
@@ -60,7 +54,8 @@ public class RxResource {
         final long timeInitial = System.nanoTime();
         
         CompletableFuture<GitHubUser> gitHubFuture = Futures.toCompletable(gitHubRxService.userRx(user), executor);
-        CompletableFuture<FacebookUser> facebookFuture = Futures.toCompletable(facebookRxService.userRx(user), executor);
+        CompletableFuture<JSONPlaceholderItem> facebookFuture = 
+                Futures.toCompletable(jSONPlaceholderRxService.itemRx(Utils.getRandom().toString()), executor);
         
         gitHubFuture
                 .thenCombine(
@@ -70,9 +65,10 @@ public class RxResource {
                 .exceptionally(
                         e -> asyncResponse.resume(Response.status(INTERNAL_SERVER_ERROR).entity(e).build()));
         
-        asyncResponse.setTimeout(1000, TimeUnit.MILLISECONDS);
+
+        asyncResponse.setTimeout(Integer.parseInt(MSApplication.properties.getProperty("timeout.milliseconds")), TimeUnit.MILLISECONDS);
         asyncResponse.setTimeoutHandler(
-                ar -> ar.resume(Response.status(SERVICE_UNAVAILABLE).entity("Operation timed out").build()));
+                ar -> ar.resume(Response.status(SERVICE_UNAVAILABLE).entity(MSApplication.properties.getProperty("timeout.message")).build()));
         
        final long timeResult = (System.nanoTime() - timeInitial) / 1000000;
     }

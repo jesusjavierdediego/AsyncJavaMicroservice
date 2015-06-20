@@ -1,5 +1,6 @@
 package com.ms.rxservices;
 
+import com.ms.app.MSApplication;
 import org.jvnet.hk2.annotations.Service;
 import com.ms.domain.GitHubContributor;
 import com.ms.domain.GitHubRepo;
@@ -16,7 +17,7 @@ import org.glassfish.jersey.client.rx.jsr166e.RxCompletableFuture;
 @Service
 public class GitHubRxService {
 
-    private final WebTarget target = RxCompletableFuture.newClient().target("https://api.github.com/");
+    private final WebTarget target = RxCompletableFuture.newClient().target(MSApplication.properties.getProperty("endpoints.url.github"));
 
 
     public CompletableFuture<GitHubUser> userRx(String user) {

@@ -1,6 +1,7 @@
 package com.ms.observableServices;
 
 
+import com.ms.app.MSApplication;
 import org.jvnet.hk2.annotations.Service;
 
 import com.ms.domain.GitHubContributor;
@@ -12,7 +13,6 @@ import java.util.List;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 
 import org.glassfish.jersey.client.rx.Rx;
@@ -26,7 +26,7 @@ import rx.Observable;
 public class GitHubObsService {
 
     
-    private final WebTarget target = ClientBuilder.newClient().target("http://graph.facebook.com/");
+    private final WebTarget target = ClientBuilder.newClient().target(MSApplication.properties.getProperty("endpoints.url.github"));
     
     private final  RxWebTarget<RxObservableInvoker> rxTarget = Rx.from(target, RxObservableInvoker.class);
 

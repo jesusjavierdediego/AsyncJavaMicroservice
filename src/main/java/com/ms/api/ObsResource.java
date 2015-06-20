@@ -1,12 +1,12 @@
 
 package com.ms.api;
 
-import com.ms.domain.CombinedEntity;
-import com.ms.observableServices.FacebookObsService;
-import com.ms.observableServices.GitHubObsService;
-import com.ms.domain.FacebookUser;
 import com.ms.domain.GitHubUser;
+import com.ms.observableServices.GitHubObsService;
+import com.ms.domain.JSONPlaceholderItem;
 import com.ms.domain.UserInfo;
+import com.ms.observableServices.JSONPlaceholderObsService;
+import com.ms.utils.Utils;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -20,10 +20,8 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.glassfish.jersey.server.ManagedAsync;
 import rx.Observable;
-import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
-import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 
 @Path("/msobs")
@@ -31,7 +29,7 @@ import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 public class ObsResource {
     
     @Inject
-    private FacebookObsService facebookObsService;
+    private JSONPlaceholderObsService jSONPlaceholderObsService;
     
     @Inject
     private GitHubObsService gitHubObsService;
@@ -44,23 +42,25 @@ public class ObsResource {
     public void bookAndComment(@Suspended final AsyncResponse asyncResponse, @PathParam("user") String user) {
         final long time = System.nanoTime();
         
-        Observable<FacebookUser> facebookUserObs = facebookObsService.userObs(user);
+        Observable<JSONPlaceholderItem> jSONPlaceholderItem = jSONPlaceholderObsService.itemObs(Utils.getRandom().toString());
         Observable<GitHubUser> gitHubUserObs = gitHubObsService.userObs(user);
+
         
-        Observable.just(new CombinedEntity())
-                .zipWith(facebookUserObs, (response, fUser) -> {
-                    response.setFacebookUser(fUser);
+        Observable.just(new UserInfo())
+                .zipWith(jSONPlaceholderItem, (response, jsonItem) -> {
+                    response.setJSONplaceholderItem(jsonItem);
                     return response;
                 })
                 .zipWith(gitHubUserObs, (response, gUser) -> {
                     response.setGitHubUser(gUser);
                     return response;
                 })
+                // Observe on another thread than the one processing the jSONplaceholderItem/gitHub user.
                 .observeOn(Schedulers.io())
                 .subscribe(response -> {
                     // Do something with errors.
                     
-                    response.setProcessingTime((System.nanoTime() - time) / 1000000);
+                    //response.setProcessingTime((System.nanoTime() - time) / 1000000);
                     asyncResponse.resume(response);
                 }, asyncResponse::resume);
         

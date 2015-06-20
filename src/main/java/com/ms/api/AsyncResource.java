@@ -1,15 +1,17 @@
 package com.ms.api;
 
 
-import com.ms.asyncservices.FacebookService;
+import com.ms.app.MSApplication;
 import com.ms.domain.GitHubRepo;
 import com.ms.utils.Futures;
-import com.ms.asyncservices.GitHubService;
+import com.ms.asyncservices.GitHubAsyncService;
+import com.ms.asyncservices.JSONPlaceholderAsyncService;
 import com.ms.utils.TaskExecutor;
-import com.ms.domain.FacebookUser;
 import com.ms.domain.GitHubContributor;
 import com.ms.domain.GitHubUser;
+import com.ms.domain.JSONPlaceholderItem;
 import com.ms.domain.UserInfo;
+import com.ms.utils.Utils;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -34,11 +36,12 @@ import org.glassfish.jersey.server.ManagedAsync;
 @Produces("application/json")
 public class AsyncResource {
 
-    @Inject
-    private FacebookService facebookService;
 
     @Inject
-    private GitHubService gitHubService;
+    private GitHubAsyncService gitHubService;
+    
+    @Inject
+    private JSONPlaceholderAsyncService jSONPlaceholderService;
 
     @Inject
     private TaskExecutor executor;
@@ -50,11 +53,13 @@ public class AsyncResource {
     public void userInfoAsync(@Suspended final AsyncResponse asyncResponse, @PathParam("user") String user) {
         final long time = System.nanoTime();
         CompletableFuture<GitHubUser> gitHubFuture = Futures.toCompletable(gitHubService.userAsync(user), executor);
-        CompletableFuture<FacebookUser> facebookFuture = Futures.toCompletable(facebookService.userAsync(user), executor);
+        
+        CompletableFuture<JSONPlaceholderItem> jsonItemFuture = 
+                Futures.toCompletable(jSONPlaceholderService.itemAsync(Utils.getRandom().toString()), executor);
 
         gitHubFuture
                 .thenCombine(
-                        facebookFuture, (g, f) -> new UserInfo(f, g))
+                        jsonItemFuture, (g, f) -> new UserInfo(f, g))
                 .thenApply(
                         info -> asyncResponse.resume(info))
                 .exceptionally(
@@ -87,10 +92,12 @@ public class AsyncResource {
                                 Response.status(INTERNAL_SERVER_ERROR).entity(e).build())
                 );
     }
+    
 
     private CompletableFuture<Stream<List<GitHubContributor>>> getContributors(String user, List<GitHubRepo> repos) {
+        final int streamLimit = Integer.parseInt(MSApplication.properties.getProperty("application.stream.limit"));
         return Futures.sequence(
-                repos.stream().limit(5).map(r -> Futures.toCompletable(gitHubService.contributorsAsync(user, r.getName()), executor)));
+                repos.stream().limit(streamLimit).map(r -> Futures.toCompletable(gitHubService.contributorsAsync(user, r.getName()), executor)));
     }
 
 }

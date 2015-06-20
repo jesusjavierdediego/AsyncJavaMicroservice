@@ -1,19 +1,30 @@
 package com.ms.domain;
 
 public class UserInfo {
-    private final GitHubUser gitHubUser;
-    private final FacebookUser facebookUser;
+    private GitHubUser gitHubUser;
+    private JSONPlaceholderItem jSONplaceholderItem;
 
-    public UserInfo(FacebookUser facebookUser, GitHubUser gitHubUser) {
+    public UserInfo() {
+    }
+    
+    public UserInfo(JSONPlaceholderItem jSONplaceholderItem, GitHubUser gitHubUser) {
         this.gitHubUser = gitHubUser;
-        this.facebookUser = facebookUser;
+        this.jSONplaceholderItem = jSONplaceholderItem;
     }
 
     public GitHubUser getGitHubUser() {
         return gitHubUser;
     }
 
-    public FacebookUser getFacebookUser() {
-        return facebookUser;
+    public JSONPlaceholderItem getJSONplaceholderItem() {
+        return jSONplaceholderItem;
+    }
+    
+    public void setJSONplaceholderItem(final JSONPlaceholderItem jSONplaceholderItem) {
+        this.jSONplaceholderItem = jSONplaceholderItem;
+    }
+    
+    public void setGitHubUser(final GitHubUser gitHubUser) {
+        this.gitHubUser = gitHubUser;
     }
 }
