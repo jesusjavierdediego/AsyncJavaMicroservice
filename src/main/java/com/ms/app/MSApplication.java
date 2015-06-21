@@ -3,14 +3,18 @@ package com.ms.app;
 import com.ms.api.AsyncResource;
 import com.ms.api.ObsResource;
 import com.ms.api.RxResource;
+import com.ms.api.SyncResource;
+
 import java.io.IOException;
 import java.io.InputStream;
 
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+
 
 @ApplicationPath("/")
 public class MSApplication extends Application {
@@ -37,12 +41,14 @@ public class MSApplication extends Application {
         readProperties();
         
         Set<Class<?>> rootResources = new HashSet<>();
+        
         rootResources.add(AsyncResource.class);
         rootResources.add(RxResource.class);
         rootResources.add(ObsResource.class);
+        rootResources.add(SyncResource.class);
+        
         return rootResources;
     }
- 
 }
 
 

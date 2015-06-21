@@ -9,6 +9,7 @@ public class GitHubUser {
     private final String login;
     private final String type;
     private final String name;
+    
     @JsonCreator
     public GitHubUser(@JsonProperty("login") String login,
                       @JsonProperty("type") String type,

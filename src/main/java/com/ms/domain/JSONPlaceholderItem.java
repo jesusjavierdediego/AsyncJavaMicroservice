@@ -11,7 +11,6 @@ public class JSONPlaceholderItem {
     private final String title;
     private final String body;
     
-    
 
     @JsonCreator
     public JSONPlaceholderItem(

@@ -18,13 +18,20 @@ import org.glassfish.jersey.server.ResourceConfig;
 import java.util.Set;
 import java.net.URI;
 import java.util.concurrent.TimeUnit;
-import org.slf4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.ms.utils.TaskExecutor;
 
 
 public final class MSServer extends AbstractIdleService {
-    
+    /*
+    LOG.trace("Hello World!");
+LOG.debug("How are you today?");
+LOG.info("I am fine.");
+LOG.warn("I love programming.");
+LOG.error("I am programming.");
+    */
     private static final Logger LOGGER = LoggerFactory.getLogger(MSServer.class);
 
     //private static final int DEFAULT_PORT = Integer.parseInt(MSApplication.properties.getProperty("service.url.port"));
@@ -39,6 +46,7 @@ public final class MSServer extends AbstractIdleService {
     
 
     public MSServer() throws Exception {
+        //https://grizzly.java.net/
         URI endpoint = new URI(BASE_URI + ":" + DEFAULT_PORT);
         httpServer = GrizzlyHttpServerFactory.createHttpServer(endpoint, getResourceConfig());
     }
@@ -46,7 +54,7 @@ public final class MSServer extends AbstractIdleService {
     @Override
     protected void startUp() throws Exception {
         httpServer.start();
-        LOGGER.info("Server started on port  {}", DEFAULT_PORT);
+        LOGGER.debug("Server started on port  {}", DEFAULT_PORT);
     }
 
     @Override
@@ -55,7 +63,7 @@ public final class MSServer extends AbstractIdleService {
     }
 
     public static void main(final String[] args) throws Exception {
-        LOGGER.info("HTTP hello world server starting ...");
+        LOGGER.debug("HTTP hello world server starting ...");
         new MSServer().startAndWait();
 
     }

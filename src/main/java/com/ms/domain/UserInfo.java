@@ -1,12 +1,13 @@
 package com.ms.domain;
 
+
 public class UserInfo {
     private GitHubUser gitHubUser;
     private JSONPlaceholderItem jSONplaceholderItem;
 
     public UserInfo() {
     }
-    
+       
     public UserInfo(JSONPlaceholderItem jSONplaceholderItem, GitHubUser gitHubUser) {
         this.gitHubUser = gitHubUser;
         this.jSONplaceholderItem = jSONplaceholderItem;

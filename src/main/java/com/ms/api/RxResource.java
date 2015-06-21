@@ -30,21 +30,27 @@ import javax.ws.rs.core.Response;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 import org.glassfish.jersey.server.ManagedAsync;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @Path("/msrx")
-@Produces("application/json")
+@Produces(MediaType.APPLICATION_JSON)
 public class RxResource {
+    private static final Logger LOGGER = LoggerFactory.getLogger(RxResource.class);
 
     
     @Inject
     private JSONPlaceholderRxService jSONPlaceholderRxService;
+    //private JSONPlaceholderRxService jSONPlaceholderRxService = new JSONPlaceholderRxService();
     
     @Inject
     private GitHubRxService gitHubRxService;
+    //private GitHubRxService gitHubRxService = new GitHubRxService();
     
     @Inject
     private TaskExecutor executor;
+    //private TaskExecutor executor = new TaskExecutor();
 
     @GET
     @ManagedAsync
