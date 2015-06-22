@@ -14,11 +14,13 @@ import java.util.Set;
 
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 @ApplicationPath("/")
 public class MSApplication extends Application {
-    
+    private static final Logger LOGGER = LoggerFactory.getLogger(MSApplication.class);
     public static final String PROPERTIES_FILE = "configuration.properties";
     public static Properties properties = new Properties();
     
@@ -27,9 +29,9 @@ public class MSApplication extends Application {
     if (inputStream != null) {
         try {
             properties.load(inputStream);
+            LOGGER.debug("Successful loading of  properties configuration");
         } catch (IOException e) {
-            // TODO Add your custom fail-over code here
-            e.printStackTrace();
+            LOGGER.error("Failure when trying load properties configuration: ", e.getMessage());
         }
     }
     return properties;

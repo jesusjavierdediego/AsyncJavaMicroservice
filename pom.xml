@@ -148,7 +148,7 @@
                                     <name>${project.artifactId}</name>
                                     <build>
                                         <from>${docker.baseImage}</from>
-                                        <maintainer>jdediego@fexco.com</maintainer>
+                                        <maintainer>jesus.dediego.erles@gmail.com</maintainer>
                                         <tags>
                                             <tag>${project.version}</tag>
                                         </tags>

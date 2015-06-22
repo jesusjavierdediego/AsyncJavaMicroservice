@@ -1,6 +1,7 @@
 package com.ms.syncservices;
 
 import com.ms.app.MSApplication;
+
 import org.jvnet.hk2.annotations.Service;
 import com.ms.domain.GitHubContributor;
 import com.ms.domain.GitHubRepo;
