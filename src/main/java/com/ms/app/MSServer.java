@@ -76,7 +76,6 @@ LOG.error("I am programming.");
         resourceConfig.register(new AbstractBinder() {
             @Override
             protected void configure() {
-
                 bind(TaskExecutor.class).to(TaskExecutor.class);
 
                 bind(JSONPlaceholderSyncService.class).to(JSONPlaceholderSyncService.class);

@@ -6,6 +6,9 @@ import com.ms.syncservices.JSONPlaceholderSyncService;
 import com.ms.domain.GitHubUser;
 import com.ms.domain.JSONPlaceholderItem;
 import com.ms.domain.UserInfo;
+import com.ms.rxservices.GitHubRxService;
+import com.ms.rxservices.JSONPlaceholderRxService;
+import com.ms.utils.TaskExecutor;
 import com.ms.utils.Utils;
 
 import javax.inject.Inject;
@@ -21,12 +24,14 @@ import javax.ws.rs.core.Response;
 public class SyncResource {
 
 
-    @Inject
-    private GitHubSyncService gitHubService;
+//    @Inject
+//    private GitHubSyncService gitHubService;
+//    
+//    @Inject
+//    private JSONPlaceholderSyncService jSONPlaceholderService;
     
-    @Inject
-    private JSONPlaceholderSyncService jSONPlaceholderService;
-    
+    private JSONPlaceholderSyncService jSONPlaceholderService = new JSONPlaceholderSyncService();
+    private GitHubSyncService gitHubService = new GitHubSyncService();
 
     @GET
     @Path("/userInfo/{user}")

@@ -40,17 +40,18 @@ public class RxResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(RxResource.class);
 
     
-    @Inject
-    private JSONPlaceholderRxService jSONPlaceholderRxService;
-    //private JSONPlaceholderRxService jSONPlaceholderRxService = new JSONPlaceholderRxService();
+//    @Inject
+//    private JSONPlaceholderRxService jSONPlaceholderRxService;
+//    
+//    @Inject
+//    private GitHubRxService gitHubRxService;
+//    
+//    @Inject
+//    private TaskExecutor executor;
     
-    @Inject
-    private GitHubRxService gitHubRxService;
-    //private GitHubRxService gitHubRxService = new GitHubRxService();
-    
-    @Inject
-    private TaskExecutor executor;
-    //private TaskExecutor executor = new TaskExecutor();
+    private JSONPlaceholderRxService jSONPlaceholderRxService = new JSONPlaceholderRxService();
+    private GitHubRxService gitHubRxService = new GitHubRxService();
+    private TaskExecutor executor = new TaskExecutor();
 
     @GET
     @ManagedAsync

@@ -28,15 +28,18 @@ import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 @Produces("application/json")
 public class ObsResource {
     
-    @Inject
-    private JSONPlaceholderObsService jSONPlaceholderObsService;
-    
-    @Inject
-    private GitHubObsService gitHubObsService;
-    
+//    @Inject
+//    private JSONPlaceholderObsService jSONPlaceholderObsService;
+//    
+//    @Inject
+//    private GitHubObsService gitHubObsService;
+    private JSONPlaceholderObsService jSONPlaceholderObsService = new JSONPlaceholderObsService();
+    private GitHubObsService gitHubObsService = new GitHubObsService();
+
+   
     
     @GET
-    @Path("/combined/{user}")
+    @Path("/userInfo/{user}")
     @Produces(MediaType.APPLICATION_JSON) 
     @ManagedAsync
     public void bookAndComment(@Suspended final AsyncResponse asyncResponse, @PathParam("user") String user) {
