@@ -23,6 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.ms.utils.TaskExecutor;
+import com.ms.utils.Utils;
+import java.util.Properties;
 
 
 public final class MSServer extends AbstractIdleService {
@@ -34,33 +36,27 @@ LOG.warn("I love programming.");
 LOG.error("I am programming.");
     */
     private static final Logger LOGGER = LoggerFactory.getLogger(MSServer.class);
-
-    //private static final int DEFAULT_PORT = Integer.parseInt(MSApplication.properties.getProperty("service.url.port"));
-    private static final int DEFAULT_PORT = Integer.parseInt("9300");
-
-    //private static final String BASE_URI = MSApplication.properties.getProperty("service.url.base");
-    private static final String BASE_URI = "http://localhost";
-    //private static final int SHUTDOWN_TIME = Integer.parseInt(MSApplication.properties.getProperty("application.time.shutdown"));
-    private static final int SHUTDOWN_TIME = Integer.parseInt("5");
+    //Include here only to get configuration for server starting before the jersey app starts.
+    //Use MSApplication.properties.getProperty(<property>) in the rest of components.
+    private final Properties configuration= Utils.getConfiguration();
     private final HttpServer httpServer;
-    
     
 
     public MSServer() throws Exception {
         //https://grizzly.java.net/
-        URI endpoint = new URI(BASE_URI + ":" + DEFAULT_PORT);
+        URI endpoint = new URI(configuration.getProperty("service.url.base") + ":" + configuration.getProperty("service.url.port"));
         httpServer = GrizzlyHttpServerFactory.createHttpServer(endpoint, getResourceConfig());
     }
 
     @Override
     protected void startUp() throws Exception {
         httpServer.start();
-        LOGGER.debug("Server started on port  {}", DEFAULT_PORT);
+        LOGGER.debug("Server started on port  {}", configuration.getProperty("service.url.port"));
     }
 
     @Override
-    protected void shutDown() throws Exception {
-        httpServer.shutdown(SHUTDOWN_TIME, TimeUnit.SECONDS);
+    protected void shutDown() throws Exception { 
+        httpServer.shutdown(Integer.parseInt(configuration.getProperty("application.time.shutdown")), TimeUnit.SECONDS);
     }
 
     public static void main(final String[] args) throws Exception {
@@ -68,7 +64,7 @@ LOG.error("I am programming.");
         new MSServer().startAndWait();
 
     }
-
+    
     public static ResourceConfig getResourceConfig() {
         MSApplication app = new MSApplication();
         Set<Class<?>> resources = new LinkedHashSet<>(app.getClasses());
@@ -80,6 +76,7 @@ LOG.error("I am programming.");
         resourceConfig.register(new AbstractBinder() {
             @Override
             protected void configure() {
+
                 bind(TaskExecutor.class).to(TaskExecutor.class);
 
                 bind(JSONPlaceholderSyncService.class).to(JSONPlaceholderSyncService.class);
