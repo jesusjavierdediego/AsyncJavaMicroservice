@@ -146,9 +146,10 @@
                                 <image>
                                     <alias>${parsedVersion.majorVersion}.${parsedVersion.minorVersion}.${parsedVersion.incrementalVersion}</alias>
                                     <name>${project.artifactId}</name>
+                                    <registry>${docker.registry}</registry>
                                     <build>
                                         <from>${docker.baseImage}</from>
-                                        <maintainer>jdediego@fexco.com</maintainer>
+                                        <maintainer>jesus.dediego.erles@gmail.com</maintainer>
                                         <tags>
                                             <tag>${project.version}</tag>
                                         </tags>
@@ -207,7 +208,8 @@
                             </execution>
                         </executions>
                     </plugin>
-                    <!--                    parsedVersion.majorVersion
+                    <!--                            
+                    parsedVersion.majorVersion
                     parsedVersion.minorVersion
                     parsedVersion.incrementalVersion
                     parsedVersion.qualifier

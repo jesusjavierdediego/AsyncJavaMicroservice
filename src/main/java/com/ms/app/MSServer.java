@@ -14,6 +14,7 @@ import com.ms.rxservices.GitHubRxService;
 import com.ms.rxservices.JSONPlaceholderRxService;
 import com.ms.syncservices.GitHubSyncService;
 import com.ms.syncservices.JSONPlaceholderSyncService;
+import com.ms.utils.CORSFilter;
 import org.glassfish.jersey.server.ResourceConfig;
 import java.util.Set;
 import java.net.URI;
@@ -75,6 +76,7 @@ LOG.error("I am programming.");
         ResourceConfig resourceConfig = new ResourceConfig(resources);
 
         resourceConfig.packages("com.ms.api");
+        resourceConfig.register(CORSFilter.class);
         resourceConfig.register(new AbstractBinder() {
             @Override
             protected void configure() {
