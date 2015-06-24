@@ -121,13 +121,13 @@
             <id>docker</id>
             <properties>
                 <docker.assembly.dir>/src/main/resources</docker.assembly.dir>
-                <docker.baseImage>bureauservice:8.0</docker.baseImage>
+                <docker.baseImage>BASEIMAGENAMEANDTAG</docker.baseImage>
                 <docker.deploy.dir>/opt/apps/asyncservice</docker.deploy.dir>
                 <docker.assembly.dir>src/main/resources</docker.assembly.dir>
                 <docker.port.internal>9300</docker.port.internal>
                 <docker.port.external>9300</docker.port.external>
-                <docker.volume.log>/usr/bureau/services/trustev/log</docker.volume.log>
-                <docker.volume.config>/usr/bureau/services/trustev/config</docker.volume.config>
+                <docker.volume.log>LOGDIRPATH</docker.volume.log>
+                <docker.volume.config>CONFIGDIRPATH</docker.volume.config>
                 <docker.registry>192.168.59.103:5000</docker.registry>
                 <docker.host>tcp://192.168.59.103:2375</docker.host>
                 <docker.cert.dir>C://Users/jdediego/.boot2docker/certs/boot2docker-vm</docker.cert.dir>
