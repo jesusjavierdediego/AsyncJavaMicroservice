@@ -23,7 +23,7 @@ public class ServicesTest extends JerseyTest{
         // warmup
         target("ms").path("userInfo/jesusjavierdediego").request().get();
 
-        final Response response = target("msa").path("userInfo/jesusjavierdediego").request(MediaType.APPLICATION_JSON).get();
+        final Response response = target("ms").path("userInfo/jesusjavierdediego").request(MediaType.APPLICATION_JSON).get();
         response.bufferEntity();
         
         final UserInfo userInfoResponse = response.readEntity(UserInfo.class);
@@ -31,7 +31,7 @@ public class ServicesTest extends JerseyTest{
         assertThat(userInfoResponse.getGitHubUser().getName(), is("Jesus de Diego"));
         assertThat(userInfoResponse.getJSONplaceholderItem().getUserId(), is("1"));
 
-        //assertThat(agentResponse.getProcessingTime() > 4500, is(true));
+        //assertThat(userInfoResponse.getProcessingTime() > 4500, is(true));
 
         System.out.println(response.readEntity(UserInfo.class));
     }
@@ -49,7 +49,7 @@ public class ServicesTest extends JerseyTest{
         assertThat(userInfoResponse.getGitHubUser().getName(), is("Jesus de Diego"));
         assertThat(userInfoResponse.getJSONplaceholderItem().getUserId(), is("1"));
 
-        //assertThat(agentResponse.getProcessingTime() > 4500, is(true));
+        //assertThat(userInfoResponse.getProcessingTime() > 4500, is(true));
 
         System.out.println(response.readEntity(UserInfo.class));
     }
@@ -59,7 +59,7 @@ public class ServicesTest extends JerseyTest{
         // warmup
         target("msrx").path("userInfo/jesusjavierdediego").request().get();
 
-        final Response response = target("msa").path("userInfo/jesusjavierdediego").request(MediaType.APPLICATION_JSON).get();
+        final Response response = target("msrx").path("userInfo/jesusjavierdediego").request(MediaType.APPLICATION_JSON).get();
         response.bufferEntity();
         
         final UserInfo userInfoResponse = response.readEntity(UserInfo.class);
@@ -67,7 +67,7 @@ public class ServicesTest extends JerseyTest{
         assertThat(userInfoResponse.getGitHubUser().getName(), is("Jesus de Diego"));
         assertThat(userInfoResponse.getJSONplaceholderItem().getUserId(), is("1"));
 
-        //assertThat(agentResponse.getProcessingTime() > 4500, is(true));
+        //assertThat(userInfoResponse.getProcessingTime() > 4500, is(true));
 
         System.out.println(response.readEntity(UserInfo.class));
     }
@@ -77,7 +77,7 @@ public class ServicesTest extends JerseyTest{
         // warmup
         target("msobs").path("userInfo/jesusjavierdediego").request().get();
 
-        final Response response = target("msa").path("userInfo/jesusjavierdediego").request(MediaType.APPLICATION_JSON).get();
+        final Response response = target("msobs").path("userInfo/jesusjavierdediego").request(MediaType.APPLICATION_JSON).get();
         response.bufferEntity();
         
         final UserInfo userInfoResponse = response.readEntity(UserInfo.class);
@@ -85,7 +85,7 @@ public class ServicesTest extends JerseyTest{
         assertThat(userInfoResponse.getGitHubUser().getName(), is("Jesus de Diego"));
         assertThat(userInfoResponse.getJSONplaceholderItem().getUserId(), is("1"));
 
-        //assertThat(agentResponse.getProcessingTime() > 4500, is(true));
+        //assertThat(userInfoResponse.getProcessingTime() > 4500, is(true));
 
         System.out.println(response.readEntity(UserInfo.class));
     }
