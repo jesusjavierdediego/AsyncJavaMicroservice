@@ -28,13 +28,7 @@ import java.util.Properties;
 
 
 public final class MSServer extends AbstractIdleService {
-    /*
-    LOG.trace("Hello World!");
-LOG.debug("How are you today?");
-LOG.info("I am fine.");
-LOG.warn("I love programming.");
-LOG.error("I am programming.");
-    */
+
     private static final Logger LOGGER = LoggerFactory.getLogger(MSServer.class);
     //Include here only to get configuration for server starting before the jersey app starts.
     //Use MSApplication.properties.getProperty(<property>) in the rest of components.

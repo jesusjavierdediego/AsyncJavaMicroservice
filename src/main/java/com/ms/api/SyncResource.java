@@ -23,15 +23,8 @@ import javax.ws.rs.core.Response;
 @Produces("application/json")
 public class SyncResource {
 
-
-//    @Inject
-//    private GitHubSyncService gitHubService;
-//    
-//    @Inject
-//    private JSONPlaceholderSyncService jSONPlaceholderService;
-    
-    private JSONPlaceholderSyncService jSONPlaceholderService = new JSONPlaceholderSyncService();
-    private GitHubSyncService gitHubService = new GitHubSyncService();
+    private final JSONPlaceholderSyncService jSONPlaceholderService = new JSONPlaceholderSyncService();
+    private final GitHubSyncService gitHubService = new GitHubSyncService();
 
     @GET
     @Path("/userInfo/{user}")

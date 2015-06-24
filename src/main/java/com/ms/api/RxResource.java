@@ -38,20 +38,10 @@ import org.slf4j.LoggerFactory;
 @Produces(MediaType.APPLICATION_JSON)
 public class RxResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(RxResource.class);
-
     
-//    @Inject
-//    private JSONPlaceholderRxService jSONPlaceholderRxService;
-//    
-//    @Inject
-//    private GitHubRxService gitHubRxService;
-//    
-//    @Inject
-//    private TaskExecutor executor;
-    
-    private JSONPlaceholderRxService jSONPlaceholderRxService = new JSONPlaceholderRxService();
-    private GitHubRxService gitHubRxService = new GitHubRxService();
-    private TaskExecutor executor = new TaskExecutor();
+    private final JSONPlaceholderRxService jSONPlaceholderRxService = new JSONPlaceholderRxService();
+    private final GitHubRxService gitHubRxService = new GitHubRxService();
+    private final TaskExecutor executor = new TaskExecutor();
 
     @GET
     @ManagedAsync

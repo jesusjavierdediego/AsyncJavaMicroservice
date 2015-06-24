@@ -28,16 +28,9 @@ import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 @Produces("application/json")
 public class ObsResource {
     
-//    @Inject
-//    private JSONPlaceholderObsService jSONPlaceholderObsService;
-//    
-//    @Inject
-//    private GitHubObsService gitHubObsService;
-    private JSONPlaceholderObsService jSONPlaceholderObsService = new JSONPlaceholderObsService();
-    private GitHubObsService gitHubObsService = new GitHubObsService();
+    private final JSONPlaceholderObsService jSONPlaceholderObsService = new JSONPlaceholderObsService();
+    private final GitHubObsService gitHubObsService = new GitHubObsService();
 
-   
-    
     @GET
     @Path("/userInfo/{user}")
     @Produces(MediaType.APPLICATION_JSON) 

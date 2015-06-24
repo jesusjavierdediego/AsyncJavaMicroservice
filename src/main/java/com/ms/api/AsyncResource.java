@@ -36,19 +36,10 @@ import org.glassfish.jersey.server.ManagedAsync;
 @Produces("application/json")
 public class AsyncResource {
 
-
-//    @Inject
-//    private GitHubAsyncService gitHubService;
-//    
-//    @Inject
-//    private JSONPlaceholderAsyncService jSONPlaceholderService;
-//
-//    @Inject
-//    private TaskExecutor executor;
     
-    private GitHubAsyncService gitHubService = new GitHubAsyncService();
-    private JSONPlaceholderAsyncService jSONPlaceholderService = new JSONPlaceholderAsyncService();
-    private TaskExecutor executor = new TaskExecutor();
+    private final GitHubAsyncService gitHubService = new GitHubAsyncService();
+    private final JSONPlaceholderAsyncService jSONPlaceholderService = new JSONPlaceholderAsyncService();
+    private final TaskExecutor executor = new TaskExecutor();
 
     
     @GET

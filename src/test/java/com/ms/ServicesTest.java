@@ -18,103 +18,77 @@ public class ServicesTest extends JerseyTest{
         return ServletDeploymentContext.builder(MSApplication.class).contextPath("/").build();
     }
     
-//     @Override
-//    protected TestContainerFactory getTestContainerFactory() {
-//        return new GrizzlyWebTestContainerFactory();
-//    }
-    
-//    @Override
-//    protected DeploymentContext configureDeployment() {
-//        //return ServletDeploymentContext.builder(MSApplication.class).contextPath("/").build();
-//        ResourceConfig config = new ResourceConfig(AsyncResource.class);
-//        config.register(new AbstractBinder() {
-//            @Override
-//            protected void configure() {
-//                
-//                bind(GitHubAsyncService.class).to(GitHubAsyncService.class);
-//                bind(JSONPlaceholderAsyncService.class).to(JSONPlaceholderAsyncService.class);
-//                bind(TaskExecutor.class).to(TaskExecutor.class);
-//                bind(UserInfo.class).to(UserInfo.class);
-//            }
-//        });
-//        //return ServletDeploymentContext.forServlet(new ServletContainer(config)).build();
-//        //return ServletDeploymentContext.newInstance(config);
-//        return ServletDeploymentContext.builder(MSApplication.class).contextPath("/").build();
-//        
-//    }
-    @Test
-    public void testAsyncClient() throws Exception {
-        // warmup
-        target("msa").path("userInfo/carloslozano").request().get();
-
-        final Response response = target("msa").path("userInfo/carloslozano").request(MediaType.APPLICATION_JSON).get();
-        response.bufferEntity();
-        
-        final UserInfo userInfoResponse = response.readEntity(UserInfo.class);
-
-        assertThat(userInfoResponse.getGitHubUser().getName(), is("Carlos Lozano"));
-        //assertThat(agentResponse.getJSONplaceholderItem().getId(), is(>10));
-
-        //assertThat(agentResponse.getProcessingTime() > 4500, is(true));
-
-        System.out.println(response.readEntity(UserInfo.class));
-        //System.out.println("Processing Time: " + agentResponse.getProcessingTime());
-    }
-    
-    @Test
-    public void testRxSyncClient() throws Exception {
-        // warmup
-        target("msrx").path("userInfo/carloslozano").request().get();
-
-        final Response response = target("msrx").path("userInfo/carloslozano").request(MediaType.APPLICATION_JSON).get();
-        response.bufferEntity();
-        
-        final UserInfo userInfoResponse = response.readEntity(UserInfo.class);
-
-        assertThat(userInfoResponse.getGitHubUser().getName(), is("Carlos Lozano"));
-        //assertThat(agentResponse.getJSONplaceholderItem().getId(), is(>10));
-
-        //assertThat(agentResponse.getProcessingTime() > 4500, is(true));
-
-        System.out.println(response.readEntity(UserInfo.class));
-        //System.out.println("Processing Time: " + agentResponse.getProcessingTime());
-    }
-    
-    @Test
-    public void testObsClient() throws Exception {
-        // warmup
-        target("msobs").path("userInfo/carloslozano").request().get();
-
-        final Response response = target("msobs").path("userInfo/carloslozano").request(MediaType.APPLICATION_JSON).get();
-        response.bufferEntity();
-        
-        final UserInfo userInfoResponse = response.readEntity(UserInfo.class);
-
-        assertThat(userInfoResponse.getGitHubUser().getName(), is("Carlos Lozano"));
-        //assertThat(agentResponse.getJSONplaceholderItem().getId(), is(>10));
-
-        //assertThat(agentResponse.getProcessingTime() > 4500, is(true));
-
-        System.out.println(response.readEntity(UserInfo.class));
-        //System.out.println("Processing Time: " + agentResponse.getProcessingTime());
-    }
-    
     @Test
     public void testSyncClient() throws Exception {
         // warmup
-        target("ms").path("userInfo/carloslozano").request().get();
+        target("ms").path("userInfo/jesusjavierdediego").request().get();
 
-        final Response response = target("ms").path("userInfo/carloslozano").request(MediaType.APPLICATION_JSON).get();
+        final Response response = target("msa").path("userInfo/jesusjavierdediego").request(MediaType.APPLICATION_JSON).get();
         response.bufferEntity();
         
         final UserInfo userInfoResponse = response.readEntity(UserInfo.class);
 
-        assertThat(userInfoResponse.getGitHubUser().getName(), is("Carlos Lozano"));
-        //assertThat(agentResponse.getJSONplaceholderItem().getId(), is(>10));
+        assertThat(userInfoResponse.getGitHubUser().getName(), is("Jesus de Diego"));
+        assertThat(userInfoResponse.getJSONplaceholderItem().getUserId(), is("1"));
 
         //assertThat(agentResponse.getProcessingTime() > 4500, is(true));
 
         System.out.println(response.readEntity(UserInfo.class));
-        //System.out.println("Processing Time: " + agentResponse.getProcessingTime());
     }
+    
+    @Test
+    public void testAsyncClient() throws Exception {
+        // warmup
+        target("msa").path("userInfo/jesusjavierdediego").request().get();
+
+        final Response response = target("msa").path("userInfo/jesusjavierdediego").request(MediaType.APPLICATION_JSON).get();
+        response.bufferEntity();
+        
+        final UserInfo userInfoResponse = response.readEntity(UserInfo.class);
+
+        assertThat(userInfoResponse.getGitHubUser().getName(), is("Jesus de Diego"));
+        assertThat(userInfoResponse.getJSONplaceholderItem().getUserId(), is("1"));
+
+        //assertThat(agentResponse.getProcessingTime() > 4500, is(true));
+
+        System.out.println(response.readEntity(UserInfo.class));
+    }
+    
+    @Test
+    public void testRxClient() throws Exception {
+        // warmup
+        target("msrx").path("userInfo/jesusjavierdediego").request().get();
+
+        final Response response = target("msa").path("userInfo/jesusjavierdediego").request(MediaType.APPLICATION_JSON).get();
+        response.bufferEntity();
+        
+        final UserInfo userInfoResponse = response.readEntity(UserInfo.class);
+
+        assertThat(userInfoResponse.getGitHubUser().getName(), is("Jesus de Diego"));
+        assertThat(userInfoResponse.getJSONplaceholderItem().getUserId(), is("1"));
+
+        //assertThat(agentResponse.getProcessingTime() > 4500, is(true));
+
+        System.out.println(response.readEntity(UserInfo.class));
+    }
+    
+    @Test
+    public void testRxObsClient() throws Exception {
+        // warmup
+        target("msobs").path("userInfo/jesusjavierdediego").request().get();
+
+        final Response response = target("msa").path("userInfo/jesusjavierdediego").request(MediaType.APPLICATION_JSON).get();
+        response.bufferEntity();
+        
+        final UserInfo userInfoResponse = response.readEntity(UserInfo.class);
+
+        assertThat(userInfoResponse.getGitHubUser().getName(), is("Jesus de Diego"));
+        assertThat(userInfoResponse.getJSONplaceholderItem().getUserId(), is("1"));
+
+        //assertThat(agentResponse.getProcessingTime() > 4500, is(true));
+
+        System.out.println(response.readEntity(UserInfo.class));
+    }
+    
+    
 }
