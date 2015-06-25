@@ -31,12 +31,14 @@ import java.util.stream.Stream;
 import static javax.ws.rs.core.Response.Status.INTERNAL_SERVER_ERROR;
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
 import org.glassfish.jersey.server.ManagedAsync;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path("/msa")
 @Produces("application/json")
 public class AsyncResource {
 
-    
+    private static final Logger LOGGER = LoggerFactory.getLogger(AsyncResource.class);
     private final GitHubAsyncService gitHubService = new GitHubAsyncService();
     private final JSONPlaceholderAsyncService jSONPlaceholderService = new JSONPlaceholderAsyncService();
     private final TaskExecutor executor = new TaskExecutor();

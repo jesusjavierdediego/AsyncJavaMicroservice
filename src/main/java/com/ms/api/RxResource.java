@@ -23,7 +23,6 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.inject.Inject;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -60,7 +59,11 @@ public class RxResource {
                 .thenApply(
                         info -> asyncResponse.resume(info))
                 .exceptionally(
-                        e -> asyncResponse.resume(Response.status(INTERNAL_SERVER_ERROR).entity(e).build()));
+                        e -> asyncResponse.resume(Response.status(INTERNAL_SERVER_ERROR).entity(e).build()))
+                .whenCompleteAsync((response, throwable) -> {
+                    // Do something with errors.
+                    LOGGER.debug("Reactive operation performed in: " + (System.nanoTime() - timeInitial) / 1000000 + " ms");
+                });
         
 
         asyncResponse.setTimeout(Integer.parseInt(MSApplication.properties.getProperty("timeout.milliseconds")), TimeUnit.MILLISECONDS);

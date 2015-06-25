@@ -23,11 +23,13 @@ import rx.Observable;
 import rx.schedulers.Schedulers;
 
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Path("/msobs")
 @Produces("application/json")
 public class ObsResource {
-    
+    private static final Logger LOGGER = LoggerFactory.getLogger(ObsResource.class);
     private final JSONPlaceholderObsService jSONPlaceholderObsService = new JSONPlaceholderObsService();
     private final GitHubObsService gitHubObsService = new GitHubObsService();
 
@@ -36,7 +38,7 @@ public class ObsResource {
     @Produces(MediaType.APPLICATION_JSON) 
     @ManagedAsync
     public void bookAndComment(@Suspended final AsyncResponse asyncResponse, @PathParam("user") String user) {
-        final long time = System.nanoTime();
+        final long timeInitial = System.nanoTime();
         
         Observable<JSONPlaceholderItem> jSONPlaceholderItem = jSONPlaceholderObsService.itemObs(Utils.getRandom().toString());
         Observable<GitHubUser> gitHubUserObs = gitHubObsService.userObs(user);
@@ -55,8 +57,7 @@ public class ObsResource {
                 .observeOn(Schedulers.io())
                 .subscribe(response -> {
                     // Do something with errors.
-                    
-                    //response.setProcessingTime((System.nanoTime() - time) / 1000000);
+                    LOGGER.debug("Reactive Observable operation performed in: " + (System.nanoTime() - timeInitial) / 1000000 + " ms");
                     asyncResponse.resume(response);
                 }, asyncResponse::resume);
         
