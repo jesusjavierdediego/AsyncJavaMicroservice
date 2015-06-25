@@ -2,7 +2,6 @@ package com.ms.api;
 
 import com.ms.syncservices.GitHubSyncService;
 import com.ms.syncservices.JSONPlaceholderSyncService;
-
 import com.ms.domain.GitHubUser;
 import com.ms.domain.JSONPlaceholderItem;
 import com.ms.domain.UserInfo;
@@ -14,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 public class SyncResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SyncResource.class);
+    private final Logger PERFORMANCE_LOGGER = LoggerFactory.getLogger("performance");
     private final JSONPlaceholderSyncService jSONPlaceholderService = new JSONPlaceholderSyncService();
     private final GitHubSyncService gitHubService = new GitHubSyncService();
 
@@ -32,9 +33,10 @@ public class SyncResource {
         final long timeInitial = System.nanoTime();
         GitHubUser gitHubUser = gitHubService.userSync(user);
         JSONPlaceholderItem jsonItem = jSONPlaceholderService.itemSync(Utils.getRandom().toString());
+        final Long time = (System.nanoTime() - timeInitial) / 1000000;
         UserInfo ui = new UserInfo(jsonItem, gitHubUser);
         
-        LOGGER.debug("Synchronous operation performed in: " + (System.nanoTime() - timeInitial) / 1000000 + " ms");
+        PERFORMANCE_LOGGER.debug("Synchronous operation performed in: " + time + " ms");
         return ui;
         
     }

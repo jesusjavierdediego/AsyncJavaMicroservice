@@ -29,7 +29,7 @@ public class MSApplication extends Application {
     if (inputStream != null) {
         try {
             properties.load(inputStream);
-            LOGGER.debug("Successful loading of  properties configuration");
+            LOGGER.info("Successful loading of  properties configuration");
         } catch (IOException e) {
             LOGGER.error("Failure when trying load properties configuration: ", e.getMessage());
         }

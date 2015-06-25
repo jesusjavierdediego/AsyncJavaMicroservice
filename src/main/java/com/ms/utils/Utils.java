@@ -4,14 +4,13 @@
  * and open the template in the editor.
  */
 package com.ms.utils;
-
 import com.ms.app.MSApplication;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-
 import java.util.Random;
+
 
 public class Utils {
 
@@ -46,4 +45,5 @@ public class Utils {
         }
         return prop;
     }
+    
 }

@@ -45,7 +45,7 @@ public final class MSServer extends AbstractIdleService {
     @Override
     protected void startUp() throws Exception {
         httpServer.start();
-        LOGGER.debug("Server started on port  {}", configuration.getProperty("service.url.port"));
+        LOGGER.info("Server started on port  {}", configuration.getProperty("service.url.port"));
     }
 
     @Override
@@ -54,7 +54,7 @@ public final class MSServer extends AbstractIdleService {
     }
 
     public static void main(final String[] args) throws Exception {
-        LOGGER.debug("HTTP hello world server starting ...");
+        LOGGER.info("HTTP hello world server starting ...");
         new MSServer().startAndWait();
 
     }

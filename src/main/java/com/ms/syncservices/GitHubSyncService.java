@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @Service
-public class GitHubSyncService {
+public class GitHubSyncService{
     
     private final WebTarget target = ClientBuilder.newClient().target(MSApplication.properties.getProperty("endpoints.url.github"));
 

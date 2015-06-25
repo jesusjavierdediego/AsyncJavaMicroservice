@@ -7,9 +7,9 @@ import com.ms.domain.JSONPlaceholderItem;
 import com.ms.domain.UserInfo;
 import com.ms.observableServices.JSONPlaceholderObsService;
 import com.ms.utils.Utils;
+
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -19,17 +19,19 @@ import javax.ws.rs.container.Suspended;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.glassfish.jersey.server.ManagedAsync;
-import rx.Observable;
-import rx.schedulers.Schedulers;
-
 import static javax.ws.rs.core.Response.Status.SERVICE_UNAVAILABLE;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import rx.Observable;
+import rx.schedulers.Schedulers;
 
 @Path("/msobs")
 @Produces("application/json")
 public class ObsResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(ObsResource.class);
+    private final Logger PERFORMANCE_LOGGER = LoggerFactory.getLogger("performance");
     private final JSONPlaceholderObsService jSONPlaceholderObsService = new JSONPlaceholderObsService();
     private final GitHubObsService gitHubObsService = new GitHubObsService();
 
@@ -57,7 +59,7 @@ public class ObsResource {
                 .observeOn(Schedulers.io())
                 .subscribe(response -> {
                     // Do something with errors.
-                    LOGGER.debug("Reactive Observable operation performed in: " + (System.nanoTime() - timeInitial) / 1000000 + " ms");
+                    PERFORMANCE_LOGGER.debug("Reactive Observable operation performed in: " + (System.nanoTime() - timeInitial) / 1000000 + " ms");
                     asyncResponse.resume(response);
                 }, asyncResponse::resume);
         
