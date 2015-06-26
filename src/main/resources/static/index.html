@@ -1,0 +1,35 @@
+<html ng-app="restclient.app">
+<head>
+    <title>RestClient Demo - Simple todo-list with JAXRS & AngularJS</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="RestClient - Simple todo-list with JAXRS & AngularJS">
+    <meta name="keywords" content="AngularJS, JAXRS, TheCodersBreakfast">
+    <meta name="author" content="Olivier Croisier (thecodersbreakfast.net)">
+    <meta charset="UTF-8">
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular-resource.min.js"></script>
+    <script type="text/javascript" src="js/restclient.js"></script>
+
+    <link rel="icon" href="favicon.ico"/>
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link href="css/bootstrap-glyphicons.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<div class="container">
+
+    <div class="jumbotron">
+        <h1>RestClient Demo <span class="glyphicon glyphicon-check pull-right"></span></h1>
+        <p class="text-muted">Simple todo-list with JAXRS & AngularJS</p>
+    </div>
+
+    <div ng-view></div>
+
+
+</div>
+</body>
+</html>
