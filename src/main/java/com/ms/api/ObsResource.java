@@ -31,7 +31,8 @@ import rx.schedulers.Schedulers;
 @Produces("application/json")
 public class ObsResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(ObsResource.class);
-    private final Logger PERFORMANCE_LOGGER = LoggerFactory.getLogger("performance");
+    private static final Logger PERFORMANCE_LOGGER = LoggerFactory.getLogger("performance");
+    
     private final JSONPlaceholderObsService jSONPlaceholderObsService = new JSONPlaceholderObsService();
     private final GitHubObsService gitHubObsService = new GitHubObsService();
 

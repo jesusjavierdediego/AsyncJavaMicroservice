@@ -22,7 +22,8 @@ import org.slf4j.LoggerFactory;
 public class SyncResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SyncResource.class);
-    private final Logger PERFORMANCE_LOGGER = LoggerFactory.getLogger("performance");
+    private static final Logger PERFORMANCE_LOGGER = LoggerFactory.getLogger("performance");
+    
     private final JSONPlaceholderSyncService jSONPlaceholderService = new JSONPlaceholderSyncService();
     private final GitHubSyncService gitHubService = new GitHubSyncService();
 
