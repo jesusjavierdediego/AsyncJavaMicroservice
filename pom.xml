@@ -104,8 +104,11 @@
                                     implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer" />
                                 <transformer
                                     implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+<!--                                    http://maven.apache.org/archives/maven-1.x/plugins/jar/manifest.html-->
                                     <manifestEntries>
                                         <Main-Class>${project.mainClass}</Main-Class>
+                                        <Specification-Title>${project.name}</Specification-Title>
+                                        <Specification-Version>${project.version}</Specification-Version>
                                     </manifestEntries>
                                 </transformer>
                             </transformers>

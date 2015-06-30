@@ -8,7 +8,7 @@
             <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
         </layout>
     </appender>
-  
+    
     <appender name="DEBUG-LOG"
             class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/debug.log</file>
@@ -17,7 +17,6 @@
                 %d{yyyy-MM-dd HH:mm:ss} - %msg%n
             </Pattern>
         </encoder>
- 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily -->
             <fileNamePattern>${LOG_HOME}/archived/debug.%d{yyyy-MM-dd}.%i.log
@@ -27,8 +26,8 @@
                 <maxFileSize>10MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
- 
     </appender>
+    
     <appender name="PERFORMANCE-LOG"
             class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_HOME}/performance.log</file>
@@ -37,27 +36,21 @@
                 %d{yyyy-MM-dd HH:mm:ss} - %msg%n
             </Pattern>
         </encoder>
- 
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- rollover daily -->
             <fileNamePattern>${LOG_HOME}/archived/performance.%d{yyyy-MM-dd}.%i.log
             </fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy
                 class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>10MB</maxFileSize>
+                <maxFileSize>5MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
- 
     </appender>
    
-<!--    <logger name="com.base22" level="TRACE"/>-->
-    
     <logger name="performance" level="debug" additivity="false">
         <appender-ref ref="PERFORMANCE-LOG"/>
     </logger>
 
-   
- 
     <root level="info">
         <appender-ref ref="STDOUT" />
         <appender-ref ref="DEBUG-LOG" />

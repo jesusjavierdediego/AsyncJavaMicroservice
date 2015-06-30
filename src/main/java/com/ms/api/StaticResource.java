@@ -1,4 +1,5 @@
-package com.ms.asyncservices;
+package com.ms.api;
+
 
 import com.google.common.base.Charsets;
 import com.google.common.io.CharStreams;
@@ -11,12 +12,10 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import java.io.*;
 
-
-@Path("/web")
+@Path("/dashboard")
 public class StaticResource {
 
     private static final String ROOT_STATIC_RESOURCES = "static";
-    
 
     @GET
     @Path("{path : .*}")
@@ -72,3 +71,4 @@ public class StaticResource {
         return file;
     }
 }
+
