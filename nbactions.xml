@@ -11,4 +11,18 @@
                 <skipTests>true</skipTests>
             </properties>
         </action>
+        <action>
+            <actionName>CUSTOM-build notest docker</actionName>
+            <displayName>build notest docker</displayName>
+            <goals>
+                <goal>clean</goal>
+                <goal>package</goal>
+            </goals>
+            <properties>
+                <skipTests>true</skipTests>
+            </properties>
+            <activatedProfiles>
+                <activatedProfile>docker</activatedProfile>
+            </activatedProfiles>
+        </action>
     </actions>

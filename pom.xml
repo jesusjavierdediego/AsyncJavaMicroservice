@@ -121,15 +121,15 @@
             <id>docker</id>
             <properties>
                 <docker.assembly.dir>/src/main/resources</docker.assembly.dir>
-                <docker.baseImage>BASEIMAGENAMEANDTAG</docker.baseImage>
-                <docker.deploy.dir>/opt/apps/asyncservice</docker.deploy.dir>
+                <docker.baseImage>mssservice:8.0</docker.baseImage>
+                <docker.deploy.dir>/opt/services</docker.deploy.dir>
                 <docker.assembly.dir>src/main/resources</docker.assembly.dir>
                 <docker.port.internal>9300</docker.port.internal>
                 <docker.port.external>9300</docker.port.external>
-                <docker.volume.log>LOGDIRPATH</docker.volume.log>
-                <docker.volume.config>CONFIGDIRPATH</docker.volume.config>
-                <docker.registry>192.168.59.103:5000</docker.registry>
-                <docker.host>tcp://192.168.59.103:2375</docker.host>
+                <docker.volume.log>/opt/services/logs</docker.volume.log>
+                <docker.volume.config>/opt/services/config</docker.volume.config>
+                <docker.registry>192.168.56.101:5000</docker.registry>
+                <docker.host>http://192.168.56.101:2375</docker.host>
                 <docker.cert.dir>PATH_DOCKER_CERT</docker.cert.dir>
             </properties>
             <build>

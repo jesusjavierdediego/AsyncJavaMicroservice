@@ -25,6 +25,7 @@ import org.slf4j.LoggerFactory;
 import com.ms.utils.TaskExecutor;
 import com.ms.utils.Utils;
 import java.util.Properties;
+import javax.ws.rs.core.UriBuilder;
 
 
 public final class MSServer extends AbstractIdleService {
@@ -37,9 +38,9 @@ public final class MSServer extends AbstractIdleService {
     
 
     public MSServer() throws Exception {
-        //https://grizzly.java.net/
-        URI endpoint = new URI(configuration.getProperty("service.url.base") + ":" + configuration.getProperty("service.url.port"));
-        httpServer = GrizzlyHttpServerFactory.createHttpServer(endpoint, getResourceConfig());
+        URI jerseyAppUri = UriBuilder.fromUri(configuration.getProperty("service.url.base"))
+                .port(Integer.parseInt(configuration.getProperty("service.url.port"))).build();
+        httpServer = GrizzlyHttpServerFactory.createHttpServer(jerseyAppUri, getResourceConfig(), false);
     }
 
     @Override
