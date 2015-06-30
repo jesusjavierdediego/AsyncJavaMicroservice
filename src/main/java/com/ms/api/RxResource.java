@@ -44,31 +44,34 @@ import org.slf4j.LoggerFactory;
 @Produces(MediaType.APPLICATION_JSON)
 public class RxResource {
     private static final Logger LOGGER = LoggerFactory.getLogger(RxResource.class);
+    private static final Logger PERFORMANCE_LOGGER = LoggerFactory.getLogger("performance");
     
     private final JSONPlaceholderRxService jSONPlaceholderRxService = new JSONPlaceholderRxService();
     private final GitHubRxService gitHubRxService = new GitHubRxService();
     private final TaskExecutor executor = new TaskExecutor();
+    private static final ExecutorService threadpool = Executors.newFixedThreadPool(3);
 
     @GET
     @ManagedAsync
     @Path("/userInfo/{user}")
     @Produces(MediaType.APPLICATION_JSON) 
     public void observableUserInfo(@Suspended final AsyncResponse asyncResponse, @PathParam("user") String user) {
-        final long timeInitial = System.nanoTime();
+        //final long timeInitial = System.nanoTime();
         
         CompletableFuture<GitHubUser> gitHubFuture = Futures.toCompletable(gitHubRxService.userRx(user), executor);
         CompletableFuture<JSONPlaceholderItem> jsonItemFuture = 
                 Futures.toCompletable(jSONPlaceholderRxService.itemRx(Utils.getRandom().toString()), executor);
-        //final Long time = (System.nanoTime() - timeInitial) / 1000000;
         
         gitHubFuture
                 .thenCombine(
-                        jsonItemFuture, (g, f) -> new UserInfo(f, g))
+                        jsonItemFuture, (g, j) -> new UserInfo(j, g))
                 .thenApply(
-                        info -> asyncResponse.resume(info))
+                        userInfo -> asyncResponse.resume(userInfo))
                 .exceptionally(
                         e -> asyncResponse.resume(Response.status(INTERNAL_SERVER_ERROR).entity(e).build()));
         
+
+        //PERFORMANCE_LOGGER.debug("Reactive operation performed in: " + timeFinal + " ms");
 
         asyncResponse.setTimeout(Integer.parseInt(MSApplication.properties.getProperty("timeout.milliseconds")), TimeUnit.MILLISECONDS);
         asyncResponse.setTimeoutHandler(
