@@ -46,4 +46,12 @@ public class Utils {
         return prop;
     }
     
+    public static String getImplVersion(Object classHandle){
+        return classHandle.getClass().getPackage().getSpecificationVersion();
+    }
+    
+    public static String getImplName(Object classHandle){
+        return classHandle.getClass().getPackage().getSpecificationTitle();
+    }
+    
 }

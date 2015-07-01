@@ -6,22 +6,16 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Identity {
-    private final String date;
     private final String version;
     private final String name;
     
     @JsonCreator
-    public Identity(@JsonProperty("date") String date,
-                      @JsonProperty("version") String version,
-                      @JsonProperty("name") String name) {
-        this.date = date;
+    public Identity(@JsonProperty("version") String version,
+                    @JsonProperty("name") String name) {
         this.version = version;
         this.name = name;
     }
 
-    public String getDate() {
-        return date;
-    }
 
     public String getVersion() {
         return version;

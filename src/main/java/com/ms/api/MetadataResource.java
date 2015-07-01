@@ -24,9 +24,7 @@ public class MetadataResource {
     @Path("/identity")
     @Produces(MediaType.APPLICATION_JSON) 
     public Identity userInfoSync(Response response, @PathParam("user") String user) {
-
-        return null;
-        
+        return new Identity(Utils.getImplVersion(this), Utils.getImplName(this));
     }
     
     @GET
