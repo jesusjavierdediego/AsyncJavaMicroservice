@@ -6,7 +6,7 @@ import org.jvnet.hk2.annotations.Service;
 
 import com.ms.domain.GitHubContributor;
 import com.ms.domain.GitHubRepo;
-import com.ms.domain.GitHubUser;
+import com.ms.domain.Identity;
 
 import java.util.List;
 
@@ -31,14 +31,14 @@ public class GitHubObsService {
     private final  RxWebTarget<RxObservableInvoker> rxTarget = Rx.from(target, RxObservableInvoker.class);
 
 
-    public Observable<GitHubUser> userObs(String user) {
+    public Observable<Identity> userObs(String user) {
 
         return RxObservable.from(rxTarget)
             .path("/users/{user}")
             .resolveTemplate("user", user)
             .request(MediaType.APPLICATION_JSON_TYPE)
             .rx()
-            .get(GitHubUser.class);
+            .get(Identity.class);
     }
 
     public Observable<List<GitHubRepo>> reposObs(String user) {

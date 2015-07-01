@@ -8,7 +8,7 @@ import com.ms.asyncservices.GitHubAsyncService;
 import com.ms.asyncservices.JSONPlaceholderAsyncService;
 import com.ms.utils.TaskExecutor;
 import com.ms.domain.GitHubContributor;
-import com.ms.domain.GitHubUser;
+import com.ms.domain.Identity;
 import com.ms.domain.JSONPlaceholderItem;
 import com.ms.domain.UserInfo;
 import com.ms.utils.Utils;
@@ -50,7 +50,7 @@ public class AsyncResource {
     @ManagedAsync
     public void userInfoAsync(@Suspended final AsyncResponse asyncResponse, @PathParam("user") String user) {
         final long time = System.nanoTime();
-        CompletableFuture<GitHubUser> gitHubFuture = Futures.toCompletable(gitHubService.userAsync(user), executor);
+        CompletableFuture<Identity> gitHubFuture = Futures.toCompletable(gitHubService.userAsync(user), executor);
         
         CompletableFuture<JSONPlaceholderItem> jsonItemFuture = 
                 Futures.toCompletable(jSONPlaceholderService.itemAsync(Utils.getRandom().toString()), executor);

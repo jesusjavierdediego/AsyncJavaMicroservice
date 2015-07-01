@@ -2,20 +2,20 @@ package com.ms.domain;
 
 
 public class UserInfo {
-    private GitHubUser gitHubUser;
+    private Identity gitHubUser;
     private JSONPlaceholderItem jSONplaceholderItem;
     private Long time;
 
     public UserInfo() {
     }
        
-    public UserInfo(JSONPlaceholderItem jSONplaceholderItem, GitHubUser gitHubUser) {
+    public UserInfo(JSONPlaceholderItem jSONplaceholderItem, Identity gitHubUser) {
         this.gitHubUser = gitHubUser;
         this.jSONplaceholderItem = jSONplaceholderItem;
 //        this.time = time;
     }
 
-    public GitHubUser getGitHubUser() {
+    public Identity getGitHubUser() {
         return gitHubUser;
     }
 
@@ -27,7 +27,7 @@ public class UserInfo {
         this.jSONplaceholderItem = jSONplaceholderItem;
     }
     
-    public void setGitHubUser(final GitHubUser gitHubUser) {
+    public void setGitHubUser(final Identity gitHubUser) {
         this.gitHubUser = gitHubUser;
     }
     

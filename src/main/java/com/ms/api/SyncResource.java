@@ -2,7 +2,7 @@ package com.ms.api;
 
 import com.ms.syncservices.GitHubSyncService;
 import com.ms.syncservices.JSONPlaceholderSyncService;
-import com.ms.domain.GitHubUser;
+import com.ms.domain.Identity;
 import com.ms.domain.JSONPlaceholderItem;
 import com.ms.domain.UserInfo;
 import com.ms.utils.Utils;
@@ -32,7 +32,7 @@ public class SyncResource {
     @Produces(MediaType.APPLICATION_JSON) 
     public UserInfo userInfoSync(Response response, @PathParam("user") String user) {
         final long timeInitial = System.nanoTime();
-        GitHubUser gitHubUser = gitHubService.userSync(user);
+        Identity gitHubUser = gitHubService.userSync(user);
         JSONPlaceholderItem jsonItem = jSONPlaceholderService.itemSync(Utils.getRandom().toString());
         final Long time = (System.nanoTime() - timeInitial) / 1000000;
         UserInfo ui = new UserInfo(jsonItem, gitHubUser);

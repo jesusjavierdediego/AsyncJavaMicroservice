@@ -5,7 +5,7 @@ import com.ms.app.MSApplication;
 import org.jvnet.hk2.annotations.Service;
 import com.ms.domain.GitHubContributor;
 import com.ms.domain.GitHubRepo;
-import com.ms.domain.GitHubUser;
+import com.ms.domain.Identity;
 
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -21,14 +21,14 @@ public class GitHubRxService {
     private final WebTarget target = RxCompletableFuture.newClient().target(MSApplication.properties.getProperty("endpoints.url.github"));
 
 
-    public CompletableFuture<GitHubUser> userRx(String user) {
+    public CompletableFuture<Identity> userRx(String user) {
 
         return RxCompletableFuture.from(target)
             .path("/users/{user}")
             .resolveTemplate("user", user)
             .request(MediaType.APPLICATION_JSON_TYPE)
             .rx()
-            .get(GitHubUser.class);
+            .get(Identity.class);
     }
 
     public CompletableFuture<List<GitHubRepo>> reposRx(String user) {

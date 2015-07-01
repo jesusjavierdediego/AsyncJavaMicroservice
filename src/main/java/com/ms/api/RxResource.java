@@ -4,7 +4,7 @@ package com.ms.api;
 import com.ms.app.MSApplication;
 import com.ms.domain.GitHubContributor;
 import com.ms.domain.GitHubRepo;
-import com.ms.domain.GitHubUser;
+import com.ms.domain.Identity;
 import com.ms.domain.JSONPlaceholderItem;
 import com.ms.domain.UserInfo;
 import com.ms.rxservices.GitHubRxService;
@@ -58,7 +58,7 @@ public class RxResource {
     public void observableUserInfo(@Suspended final AsyncResponse asyncResponse, @PathParam("user") String user) {
         //final long timeInitial = System.nanoTime();
         
-        CompletableFuture<GitHubUser> gitHubFuture = Futures.toCompletable(gitHubRxService.userRx(user), executor);
+        CompletableFuture<Identity> gitHubFuture = Futures.toCompletable(gitHubRxService.userRx(user), executor);
         CompletableFuture<JSONPlaceholderItem> jsonItemFuture = 
                 Futures.toCompletable(jSONPlaceholderRxService.itemRx(Utils.getRandom().toString()), executor);
         

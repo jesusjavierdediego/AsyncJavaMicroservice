@@ -5,7 +5,7 @@ import com.ms.app.MSApplication;
 import org.jvnet.hk2.annotations.Service;
 import com.ms.domain.GitHubContributor;
 import com.ms.domain.GitHubRepo;
-import com.ms.domain.GitHubUser;
+import com.ms.domain.Identity;
 
 
 import javax.ws.rs.client.ClientBuilder;
@@ -20,12 +20,12 @@ public class GitHubSyncService{
     
     private final WebTarget target = ClientBuilder.newClient().target(MSApplication.properties.getProperty("endpoints.url.github"));
 
-    public GitHubUser userSync(String user) {
+    public Identity userSync(String user) {
         return target
                 .path("/users/{user}")
                 .resolveTemplate("user", user)
                 .request(MediaType.APPLICATION_JSON_TYPE)
-                .get(GitHubUser.class);
+                .get(Identity.class);
     }
 
     public List<GitHubRepo> reposAsync(String user) {

@@ -1,7 +1,7 @@
 
 package com.ms.api;
 
-import com.ms.domain.GitHubUser;
+import com.ms.domain.Identity;
 import com.ms.observableServices.GitHubObsService;
 import com.ms.domain.JSONPlaceholderItem;
 import com.ms.domain.UserInfo;
@@ -44,7 +44,7 @@ public class ObsResource {
         final long timeInitial = System.nanoTime();
         
         Observable<JSONPlaceholderItem> jSONPlaceholderItem = jSONPlaceholderObsService.itemObs(Utils.getRandom().toString());
-        Observable<GitHubUser> gitHubUserObs = gitHubObsService.userObs(user);
+        Observable<Identity> gitHubUserObs = gitHubObsService.userObs(user);
 
         
         Observable.just(new UserInfo())
